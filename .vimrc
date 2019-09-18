@@ -10,23 +10,70 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'                                                              
 Plugin 'fatih/vim-go'                                                                     
 Plugin 'scrooloose/nerdtree'                                                             
+Plugin 'majutsushi/tagbar'                                                             
 Plugin 'Valloric/YouCompleteMe'                                                           
 Plugin 'SirVer/ultisnips'
+Plugin 'mileszs/ack.vim'
 call vundle#end()                                                                         
 filetype plugin indent on                                                                
 
 " set mapleader
 let mapleader=";"                                                     
+
+" tagbar settings
+nnoremap <silent> <F9> :TagbarToggle<CR>
+let g:tagbar_width = 30
+let g:tagbar_autopreview = 1
+let g:tagbar_autoclose = 0
+let g:tagbar_sort = 0
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+" nerdtree settings
 map <leader>n :NERDTreeToggle<CR>                                                         
+
+" tab settings
+map <C-j> :tabNext<CR>                                                         
+map <C-k> :tabprevious<CR>                                                         
+map <C-h> :tabfirst<CR>                                                         
+map <C-l> :tablast<CR>                                                         
 
 " vim-go settings
 let g:go_fmt_command = "goimports"                                                       
 let g:go_highlight_functions = 1                                                         
 let g:go_highlight_methods = 1                                                           
 let g:go_highlight_structs = 1                                                          
-let g:ycm_add_preview_to_completeopt = 0                                                 
+let g:ycm_add_preview_to_completeopt = 1                                                 
 let g:ycm_min_num_of_chars_for_completion = 1                                             
 let g:ycm_auto_trigger = 1                                                               
+let go_def_reuse_buffer =1
+let g:go_def_mode = 'guru'
+let g:go_guru_scope =["github.com/..."]
 set completeopt-=preview 
 
 " YCM settings
@@ -47,9 +94,16 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>gt <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 au FileType go nmap <Leader>e <Plug>(go-rename)　　
+
+" ack mappings
+map <silent> <F4> :Ack<CR> 
+
+" ctag setting
+set tags+=tags
+set tags+=./tags,tags,/home/licheng/.tags
