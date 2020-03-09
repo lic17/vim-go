@@ -22,6 +22,8 @@ copy .vimrc to ~/.vimrc
    go mod edit -replace=golang.org/x/sys@v0.0.0-20190215142949-d0b11bdaac8a=github.com/golang/sys@v0.0.0-20190215142949-d0b11bdaac8a
    cd ~/.vim/bundle/YouCompleteMe & install.py --all
 ```
+  ~/.vim/bundle/vim-godef/plugin/godef.vim 
+  autocmd FileType go nnoremap <buffer> <C-]> :call GodefUnderCursor()<cr>
 
 #install go tools
 

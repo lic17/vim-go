@@ -9,11 +9,14 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()                                                                       
 Plugin 'VundleVim/Vundle.vim'                                                              
 Plugin 'fatih/vim-go'                                                                     
+Plugin 'posva/vim-vue'
+Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'                                                             
 Plugin 'majutsushi/tagbar'                                                             
 Plugin 'Valloric/YouCompleteMe'                                                           
 Plugin 'SirVer/ultisnips'
 Plugin 'mileszs/ack.vim'
+Plugin 'dgryski/vim-godef'
 call vundle#end()                                                                         
 filetype plugin indent on                                                                
 
@@ -73,8 +76,13 @@ let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_auto_trigger = 1                                                               
 let go_def_reuse_buffer =1
 let g:go_def_mode = 'guru'
+let g:godef_split=3 """左右打开新窗口的时候
+let g:godef_same_file_in_same_window=1 """函数在同一个文件中时不需要打开新窗口
 let g:go_guru_scope =["github.com/..."]
 set completeopt-=preview 
+
+" vue
+let g:syntastic_javascript_checkers = ['eslint']
 
 " YCM settings
 let g:ycm_key_list_select_completion = ['', '']
@@ -100,6 +108,17 @@ au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 au FileType go nmap <Leader>e <Plug>(go-rename)　　
+
+" vue
+au BufNewFile,BufRead *.html,*.js,*.vue set tabstop=2
+au BufNewFile,BufRead *.html,*.js,*.vue set softtabstop=2
+au BufNewFile,BufRead *.html,*.js,*.vue set shiftwidth=2
+au BufNewFile,BufRead *.html,*.js,*.vue set expandtab
+au BufNewFile,BufRead *.html,*.js,*.vue set autoindent
+au BufNewFile,BufRead *.html,*.js,*.vue set fileformat=unix
+
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd FileType vue syntax sync fromstart
 
 " ack mappings
 map <silent> <F4> :Ack<CR> 
